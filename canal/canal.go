@@ -217,7 +217,7 @@ func (c *Canal) run() error {
 
 	if !c.dumped {
 		c.dumped = true
-
+		fmt.Println("tryDump************")
 		err := c.tryDump()
 		close(c.dumpDoneCh)
 

@@ -193,6 +193,8 @@ func (c *Canal) dump() error {
 func (c *Canal) tryDump() error {
 	pos := c.master.Position()
 	gset := c.master.GTIDSet()
+	fmt.Printf("pos: %v\n", pos)
+	fmt.Printf("gset: %v\n", gset)
 	if (len(pos.Name) > 0 && pos.Pos > 0) ||
 		(gset != nil && gset.String() != "") {
 		// we will sync with binlog name and position
@@ -204,6 +206,6 @@ func (c *Canal) tryDump() error {
 		log.Info("skip dump, no mysqldump")
 		return nil
 	}
-
+	fmt.Printf("c.dump()\n")
 	return c.dump()
 }

@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-mysql-org/go-mysql/mysql"
-	"github.com/go-mysql-org/go-mysql/replication"
+	"github.com/onda-daiki/go-mysql/mysql"
+	"github.com/onda-daiki/go-mysql/replication"
 	. "github.com/pingcap/check"
 	"github.com/pingcap/errors"
 	"github.com/pingcap/parser"
