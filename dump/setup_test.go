@@ -4,7 +4,7 @@ import (
 	"flag"
 	"testing"
 
-	"github.com/go-mysql-org/go-mysql/mysql"
+	"github.com/onda-daiki/go-mysql/mysql"
 	. "github.com/pingcap/check"
 )
 

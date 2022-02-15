@@ -13,7 +13,7 @@ import (
 	"github.com/pingcap/errors"
 	uuid "github.com/satori/go.uuid"
 
-	. "github.com/go-mysql-org/go-mysql/mysql"
+	. "github.com/onda-daiki/go-mysql/mysql"
 )
 
 const (
