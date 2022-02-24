@@ -164,7 +164,7 @@ func (c *Canal) runSyncBinlog() error {
 					}
 				}
 			}
-			fmt.Printf("replication.QueryEvent e.Query: %v\n", e.Query)
+			fmt.Printf("replication.QueryEvent e.Query: %v\n", string(e.Query))
 			fmt.Printf("replication.QueryEvent e.GSET: %v\n", e.GSet)
 			if savePos && e.GSet != nil {
 				c.master.UpdateGTIDSet(e.GSet)
