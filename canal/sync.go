@@ -2,6 +2,7 @@ package canal
 
 import (
 	"fmt"
+	"os"
 	"sync/atomic"
 	"time"
 
@@ -167,6 +168,7 @@ func (c *Canal) runSyncBinlog() error {
 				}
 			}
 			fmt.Printf("replication.QueryEvent e.Query: %v\n", string(e.Query))
+			e.Dump(os.Stdout)
 			fmt.Printf("replication.QueryEvent e.GSET: %v\n", e.GSet)
 			if savePos && e.GSet != nil {
 				c.master.UpdateGTIDSet(e.GSet)
