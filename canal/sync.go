@@ -154,6 +154,8 @@ func (c *Canal) runSyncBinlog() error {
 					if err = c.updateTable(node.db, node.table); err != nil {
 						return errors.Trace(err)
 					}
+					fmt.Printf("replication.QueryEvent node.db: %v\n", node.db)
+					fmt.Printf("replication.QueryEvent node.table: %v\n", node.table)
 				}
 				if len(nodes) > 0 {
 					savePos = true
