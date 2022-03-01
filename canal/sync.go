@@ -101,6 +101,7 @@ func (c *Canal) runSyncBinlog() error {
 			}
 		case *replication.RowsEvent:
 			// we only focus row based event
+			fmt.Printf("RowsEvent GTIDSet: %v\n", c.master.GTIDSet())
 			err = c.handleRowsEvent(ev)
 			if err != nil {
 				e := errors.Cause(err)
