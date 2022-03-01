@@ -144,13 +144,13 @@ func (c *Canal) runSyncBinlog() error {
 				return errors.Trace(err)
 			}
 		case *replication.QueryEvent:
+			fmt.Printf("QueryEvent GTIDSet: %v\n", c.master.GTIDSet())
 			stmts, _, err := c.parser.Parse(string(e.Query), "", "")
 			if err != nil {
 				log.Errorf("parse query(%s) err %v, will skip this event", e.Query, err)
 				continue
 			}
 			for _, stmt := range stmts {
-				fmt.Printf("replication.QueryEvent loop\n")
 				nodes := parseStmt(stmt)
 				for _, node := range nodes {
 					if node.db == "" {
@@ -159,8 +159,6 @@ func (c *Canal) runSyncBinlog() error {
 					if err = c.updateTable(node.db, node.table); err != nil {
 						return errors.Trace(err)
 					}
-					fmt.Printf("replication.QueryEvent node.db: %v\n", node.db)
-					fmt.Printf("replication.QueryEvent node.table: %v\n", node.table)
 				}
 				if len(nodes) > 0 {
 					savePos = true
