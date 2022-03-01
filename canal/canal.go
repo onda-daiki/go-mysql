@@ -298,8 +298,6 @@ func (c *Canal) checkTableMatch(key string) bool {
 	return matchFlag
 }
 
-func GetGTIDSet()
-
 func (c *Canal) GetTable(db string, table string) (*schema.Table, error) {
 	key := fmt.Sprintf("%s.%s", db, table)
 	// if table is excluded, return error and skip parsing event or dump
