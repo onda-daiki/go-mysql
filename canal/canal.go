@@ -298,6 +298,8 @@ func (c *Canal) checkTableMatch(key string) bool {
 	return matchFlag
 }
 
+func GetGTIDSet()
+
 func (c *Canal) GetTable(db string, table string) (*schema.Table, error) {
 	key := fmt.Sprintf("%s.%s", db, table)
 	// if table is excluded, return error and skip parsing event or dump
@@ -493,5 +495,9 @@ func (c *Canal) SyncedTimestamp() uint32 {
 }
 
 func (c *Canal) SyncedGTIDSet() mysql.GTIDSet {
+	return c.master.GTIDSet()
+}
+
+func (c *Canal) NextGTIDSet() mysql.GTIDSet {
 	return c.master.GTIDSet()
 }

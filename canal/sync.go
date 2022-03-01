@@ -102,6 +102,7 @@ func (c *Canal) runSyncBinlog() error {
 		case *replication.RowsEvent:
 			// we only focus row based event
 			fmt.Printf("RowsEvent GTIDSet: %v\n", c.master.GTIDSet())
+			fmt.Printf("RowsEvent NextGTIDSet: %v\n", c.master.NextGTIDSet())
 			err = c.handleRowsEvent(ev)
 			if err != nil {
 				e := errors.Cause(err)
@@ -136,6 +137,7 @@ func (c *Canal) runSyncBinlog() error {
 		case *replication.GTIDEvent:
 			u, _ := uuid.FromBytes(e.SID)
 			gtid, err := mysql.ParseMysqlGTIDSet(fmt.Sprintf("%s:%d", u.String(), e.GNO))
+			c.master.UpdateNextGTIDSet(gtid)
 			fmt.Printf("GTIDEvent GTIDSet: %v\n", gtid)
 			if err != nil {
 				return errors.Trace(err)

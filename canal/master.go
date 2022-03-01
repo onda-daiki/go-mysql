@@ -14,6 +14,8 @@ type masterInfo struct {
 
 	gset mysql.GTIDSet
 
+	nGset mysql.GTIDSet
+
 	timestamp uint32
 }
 
@@ -30,6 +32,14 @@ func (m *masterInfo) UpdateTimestamp(ts uint32) {
 
 	m.Lock()
 	m.timestamp = ts
+	m.Unlock()
+}
+
+func (m *masterInfo) UpdateNextGTIDSet(gset mysql.GTIDSet) {
+	log.Debugf("update master gtid set %s", gset)
+
+	m.Lock()
+	m.nGset = gset
 	m.Unlock()
 }
 
@@ -63,4 +73,14 @@ func (m *masterInfo) GTIDSet() mysql.GTIDSet {
 		return nil
 	}
 	return m.gset.Clone()
+}
+
+func (m *masterInfo) NextGTIDSet() mysql.GTIDSet {
+	m.RLock()
+	defer m.RUnlock()
+
+	if m.nGset == nil {
+		return nil
+	}
+	return m.nGset.Clone()
 }
