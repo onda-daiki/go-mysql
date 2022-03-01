@@ -121,6 +121,7 @@ func (c *Canal) runSyncBinlog() error {
 			}
 			if e.GSet != nil {
 				c.master.UpdateGTIDSet(e.GSet)
+				fmt.Printf("XIDEvent GTIDSet: %v\n", c.master.GTIDSet())
 			}
 		case *replication.MariadbGTIDEvent:
 			// try to save the GTID later
@@ -134,6 +135,7 @@ func (c *Canal) runSyncBinlog() error {
 		case *replication.GTIDEvent:
 			u, _ := uuid.FromBytes(e.SID)
 			gtid, err := mysql.ParseMysqlGTIDSet(fmt.Sprintf("%s:%d", u.String(), e.GNO))
+			fmt.Printf("GTIDEvent GTIDSet: %v\n", gtid)
 			if err != nil {
 				return errors.Trace(err)
 			}
@@ -147,6 +149,7 @@ func (c *Canal) runSyncBinlog() error {
 				continue
 			}
 			for _, stmt := range stmts {
+				fmt.Printf("replication.QueryEvent loop\n")
 				nodes := parseStmt(stmt)
 				for _, node := range nodes {
 					if node.db == "" {
